@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class PlayerHomePage extends StatelessWidget {
   const PlayerHomePage({super.key});
@@ -41,7 +42,7 @@ class PlayerHomePage extends StatelessWidget {
             const SizedBox(height: 48),
             ElevatedButton.icon(
               onPressed: () {
-                // TODO: QRコード読み取り機能を実装
+                context.pushNamed('qr_scanner');
               },
               icon: const Icon(Icons.qr_code_scanner),
               label: const Text('QRコードを読み取る'),

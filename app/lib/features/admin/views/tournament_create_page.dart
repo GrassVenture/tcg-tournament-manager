@@ -119,11 +119,20 @@ class TournamentCreatePage extends HookWidget {
                         // TODO: 大会作成処理を実装
                         await Future.delayed(const Duration(seconds: 2));
                         
+                        // 仮の大会IDを生成
+                        final tournamentId = DateTime.now().millisecondsSinceEpoch.toString();
+                        
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('大会が作成されました')),
                           );
-                          context.pop();
+                          
+                          // QRコード表示ページに遷移
+                          context.pushReplacementNamed(
+                            'tournament_qr',
+                            pathParameters: {'tournamentId': tournamentId},
+                            queryParameters: {'name': nameController.text},
+                          );
                         }
                       } catch (e) {
                         if (context.mounted) {
