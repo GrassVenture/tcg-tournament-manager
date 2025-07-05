@@ -33,7 +33,6 @@ dependencies:
   
   # QRコード
   qr_flutter: ^4.1.0
-  qr_code_scanner_plus: ^2.0.10+1
   
   # ユーティリティ
   universal_html: ^2.2.4

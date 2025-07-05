@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 
 class PlayerJoinPage extends HookWidget {
   final String tournamentId;
@@ -18,16 +17,47 @@ class PlayerJoinPage extends HookWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('大会参加'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.pop(),
-        ),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // 大会情報カード
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.event,
+                      size: 48,
+                      color: Colors.blue,
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'TCG大会への参加',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '大会ID: $tournamentId',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            // 参加登録フォーム
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
@@ -35,7 +65,7 @@ class PlayerJoinPage extends HookWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Text(
-                      '大会参加登録',
+                      '参加者情報',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -47,13 +77,15 @@ class PlayerJoinPage extends HookWidget {
                       decoration: const InputDecoration(
                         labelText: '参加者名',
                         hintText: '例: 田中太郎',
+                        prefixIcon: Icon(Icons.person),
                       ),
                       textInputAction: TextInputAction.done,
+                      autofocus: true,
                     ),
                     const SizedBox(height: 16),
-                    Text(
-                      '大会ID: $tournamentId',
-                      style: const TextStyle(
+                    const Text(
+                      '※ 大会中に表示される名前です',
+                      style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
                       ),
@@ -83,9 +115,13 @@ class PlayerJoinPage extends HookWidget {
                         
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('大会に参加しました')),
+                            const SnackBar(
+                              content: Text('大会に参加しました！大会開始までお待ちください。'),
+                              duration: Duration(seconds: 3),
+                            ),
                           );
-                          context.pop();
+                          // 参加完了後は待機ページに遷移（今後実装）
+                          // context.pushReplacementNamed('tournament_lobby', pathParameters: {'tournamentId': tournamentId});
                         }
                       } catch (e) {
                         if (context.mounted) {
