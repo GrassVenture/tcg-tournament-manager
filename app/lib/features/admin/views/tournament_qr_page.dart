@@ -14,7 +14,8 @@ class TournamentQrPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final joinUrl = 'https://tcg-tournament.example.com/player/join/$tournamentId';
+    // ローカル開発用URL（PCのIPアドレス:ポート番号）
+    final joinUrl = 'http://192.168.30.106:3000/player/join/$tournamentId';
     
     return Scaffold(
       appBar: AppBar(
@@ -77,11 +78,21 @@ class TournamentQrPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    const Text(
-                      'プレイヤーはこのQRコードを\nスマートフォンで読み取って参加できます',
-                      style: TextStyle(
+                    Text(
+                      'プレイヤーはこのQRコードを\nスマートフォンで読み取って参加できます\n\n📱 同じWi-Fiネットワークに接続してください',
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'URL: http://192.168.30.106:3000/player/join/$tournamentId',
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: Colors.grey,
+                        fontFamily: 'monospace',
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -104,10 +115,11 @@ class TournamentQrPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    const Text('1. プレイヤーにQRコードを見せる'),
-                    const Text('2. プレイヤーがスマートフォンで読み取る'),
-                    const Text('3. 参加者名を入力してもらう'),
-                    const Text('4. 参加登録完了'),
+                    const Text('1. プレイヤーのスマホを同じWi-Fiに接続'),
+                    const Text('2. プレイヤーにQRコードを見せる'),
+                    const Text('3. スマホのカメラでQRコードを読み取る'),
+                    const Text('4. 参加者名を入力してもらう'),
+                    const Text('5. 参加登録完了'),
                   ],
                 ),
               ),
