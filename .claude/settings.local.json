@@ -15,7 +15,8 @@
       "Bash(gh pr view:*)",
       "Bash(git fetch:*)",
       "Bash(git branch:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": []
   }
