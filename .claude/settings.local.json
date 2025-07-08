@@ -5,7 +5,18 @@
       "Bash(flutter packages pub run build_runner build:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(flutter:*)"
+      "Bash(flutter:*)",
+      "Bash(git rm:*)",
+      "Bash(curl:*)",
+      "Bash(lsof:*)",
+      "Bash(ps:*)",
+      "Bash(kill:*)",
+      "Bash(ngrok:*)",
+      "Bash(gh pr view:*)",
+      "Bash(git fetch:*)",
+      "Bash(git branch:*)",
+      "Bash(git merge:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": []
   }
