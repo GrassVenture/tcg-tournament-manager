@@ -1,12 +1,12 @@
 name: tcg_tournament_manager
 description: TCG tournament management system with Swiss draw format
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -15,26 +15,25 @@ dependencies:
   # 状態管理
   hooks_riverpod: ^2.5.1
   flutter_hooks: ^0.20.5
-  
+
   # Firebase
   firebase_core: ^3.13.0
   firebase_auth: ^5.5.3
   cloud_firestore: ^5.6.7
-  
+
   # ルーティング
   go_router: ^13.2.1
-  
+
   # データモデリング
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
-  
+
   # HTTP通信
   dio: ^5.8.0+1
-  
+
   # QRコード
   qr_flutter: ^4.1.0
-  qr_code_scanner: ^1.0.1
-  
+
   # ユーティリティ
   universal_html: ^2.2.4
   intl: ^0.20.2
