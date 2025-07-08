@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class TournamentQrPage extends StatelessWidget {
   final String tournamentId;
@@ -14,8 +15,9 @@ class TournamentQrPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final joinUrl = 'https://tcg-tournament.example.com/player/join/$tournamentId';
-    
+    // ローカル開発用URL - localhost使用（外部IPはFlutter開発サーバーでアクセス不可）
+    final joinUrl = 'http://localhost:3000/#/player/join/$tournamentId';
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('大会QRコード'),
@@ -24,7 +26,7 @@ class TournamentQrPage extends StatelessWidget {
           onPressed: () => context.pop(),
         ),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -78,12 +80,74 @@ class TournamentQrPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'プレイヤーはこのQRコードを\nスマートフォンで読み取って参加できます',
+                      'プレイヤーはこのQRコードを\nスマートフォンで読み取って参加できます\n\n⚠️ 開発環境のため、PCブラウザでのテスト用です',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
                       ),
                       textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.yellow.shade100,
+                        border: Border.all(color: Colors.orange),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        children: [
+                          const Text(
+                            '🔍 デバッグ情報',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.orange,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          SelectableText(
+                            'QRコード生成URL:\n$joinUrl',
+                            style: const TextStyle(
+                              fontSize: 10,
+                              fontFamily: 'monospace',
+                              color: Colors.black87,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 8),
+                          ElevatedButton.icon(
+                            onPressed: () async {
+                              // クリップボードにコピー
+                              await Clipboard.setData(ClipboardData(text: joinUrl));
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('URLをクリップボードにコピーしました！'),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              }
+                            },
+                            icon: const Icon(Icons.copy, size: 16),
+                            label: const Text('URLコピー'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.orange,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              textStyle: const TextStyle(fontSize: 12),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            '文字数: ${joinUrl.length}',
+                            style: const TextStyle(
+                              fontSize: 10,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -104,10 +168,11 @@ class TournamentQrPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    const Text('1. プレイヤーにQRコードを見せる'),
-                    const Text('2. プレイヤーがスマートフォンで読み取る'),
-                    const Text('3. 参加者名を入力してもらう'),
-                    const Text('4. 参加登録完了'),
+                    const Text('1. プレイヤーのスマホを同じWi-Fiに接続'),
+                    const Text('2. プレイヤーにQRコードを見せる'),
+                    const Text('3. スマホのカメラでQRコードを読み取る'),
+                    const Text('4. 参加者名を入力してもらう'),
+                    const Text('5. 参加登録完了'),
                   ],
                 ),
               ),
