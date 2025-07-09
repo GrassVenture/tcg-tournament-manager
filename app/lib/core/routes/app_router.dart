@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../features/admin/views/admin_home_page.dart';
 import '../../features/admin/views/tournament_create_page.dart';
 import '../../features/admin/views/tournament_qr_page.dart';
-import '../../features/player/views/player_home_page.dart';
 import '../../features/player/views/player_join_page.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -33,11 +32,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
 
       // プレイヤールート
-      GoRoute(
-        path: '/player',
-        name: 'player_home',
-        builder: (context, state) => const PlayerHomePage(),
-      ),
       GoRoute(
         path: '/player/join/:tournamentId',
         name: 'player_join',
