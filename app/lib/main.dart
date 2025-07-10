@@ -3,8 +3,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'core/routes/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'core/services/firebase_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  try {
+    await FirebaseService.initializeFirebase();
+  } catch (e) {
+    debugPrint('Firebase initialization failed: $e');
+    // Firebase接続に失敗してもアプリは起動する（オフラインモード）
+  }
+  
   runApp(const ProviderScope(child: MyApp()));
 }
 
