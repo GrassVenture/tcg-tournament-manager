@@ -1,3 +1,47 @@
 
 # FVM Version Cache
 .fvm/
+
+# Flutter related
+**/build/
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/flutter_*.log
+
+# Node.js related
+**/node_modules/
+**/package-lock.json
+**/yarn.lock
+
+# Firebase related
+**/.firebase/
+**/firebase-debug.log
+**/firestore-debug.log
+**/ui-debug.log
+
+# IDE related
+**/.vscode/
+**/.idea/
+**/*.iml
+**/.settings/
+**/.project
+**/.classpath
+
+# OS related
+**/.DS_Store
+**/Thumbs.db
+
+# Logs
+**/*.log
+**/logs/
+
+# Environment files
+**/.env
+**/.env.local
+**/.env.production
+
+# Temporary files
+**/tmp/
+**/temp/
+**/.tmp/
