@@ -180,13 +180,10 @@ class TournamentQrPage extends StatelessWidget {
             const SizedBox(height: 24),
             ElevatedButton.icon(
               onPressed: () {
-                // TODO: 参加者一覧画面への遷移
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('参加者一覧機能は今後実装予定です')),
-                );
+                context.push('/admin/tournament/$tournamentId/matches');
               },
-              icon: const Icon(Icons.people),
-              label: const Text('参加者一覧を確認'),
+              icon: const Icon(Icons.table_chart),
+              label: const Text('対戦表を確認'),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),

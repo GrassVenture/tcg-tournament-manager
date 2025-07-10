@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../tournament/models/tournament.dart';
+import '../../tournament/controllers/tournament_controller.dart';
 
-class TournamentCreatePage extends HookWidget {
+class TournamentCreatePage extends HookConsumerWidget {
   const TournamentCreatePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final nameController = useTextEditingController();
     final maxPlayersController = useTextEditingController(text: '16');
     final drawHandling = useState(DrawHandling.bothLose);
@@ -116,11 +118,28 @@ class TournamentCreatePage extends HookWidget {
                       isCreating.value = true;
 
                       try {
-                        // TODO: 大会作成処理を実装
-                        await Future.delayed(const Duration(seconds: 2));
-                        
-                        // 仮の大会IDを生成
+                        // 大会IDを生成
                         final tournamentId = DateTime.now().millisecondsSinceEpoch.toString();
+                        
+                        // 総ラウンド数を自動計算
+                        final totalRounds = _calculateTotalRounds(maxPlayers);
+                        
+                        // 大会オブジェクトを作成
+                        final tournament = Tournament(
+                          id: tournamentId,
+                          name: nameController.text,
+                          maxPlayers: maxPlayers,
+                          currentRound: 0,
+                          totalRounds: totalRounds,
+                          drawHandling: drawHandling.value,
+                          status: TournamentStatus.registration,
+                          createdAt: DateTime.now(),
+                          updatedAt: DateTime.now(),
+                        );
+                        
+                        // Firestoreに大会を作成
+                        final tournamentRepo = ref.read(tournamentRepositoryProvider);
+                        await tournamentRepo.createTournament(tournament);
                         
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -165,5 +184,14 @@ class TournamentCreatePage extends HookWidget {
         ),
       ),
     );
+  }
+
+  // スイスドロー形式の総ラウンド数を計算
+  int _calculateTotalRounds(int playerCount) {
+    if (playerCount <= 8) return 3;
+    if (playerCount <= 16) return 4;
+    if (playerCount <= 32) return 5;
+    if (playerCount <= 64) return 6;
+    return 6; // 最大6ラウンド
   }
 }
